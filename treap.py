@@ -6,45 +6,41 @@
 # Chapter 11 Lab: Heaps and Treaps
 
 class TreapNode:
-    key
-    priority
-    left
-    right
+    def __init__(self, key, priority):
+        self.key = key
+        self.priority = priority
+        self.left = None
+        self.right = None
 
-
-    constructor(key, priority):
-        set self.key = key
-        set self.priority = priority
-        set self.left = null
-        set self.right = null
-
-function insert(node, key, priority):
-    if node is null:
-        return new TreapNode(key, priority)
+def insert(node, key, priority):
+    if node is None:
+        return TreapNode(key, priority)
 
     if key < node.key:
         node.left = insert(node.left, key, priority)
         if node.left.priority > node.priority:
-            node = RightRotation(node)
+            node = right_rotation(node)
 
-    else if key > node.key:
+    elif key > node.key:
         node.right = insert(node.right, key, priority)
         if node.right.priority > node.priority:
-            node = LeftRotation(node)
+            node = left_rotation(node)
     return node
 
-function RightRotation(node):
-    leftChild = node.left
-    node.left = leftChild.right
-    leftChild.right = node
-    return leftChild
-function LeftRotation(node):
-    rightChild = node.right
-    node.right = rightChild.left
-    rightChild.left = node
-    return rightChild
-function search(node, key):
-    if node is null or node.key == key:
+def right_rotation(node):
+    left_child = node.left
+    node.left = left_child.right
+    left_child.right = node
+    return left_child
+
+def left_rotation(node):
+    right_child = node.right
+    node.right = right_child.left
+    right_child.left = node
+    return right_child
+
+def search(node, key):
+    if node is None or node.key == key:
         return node
 
     if key < node.key:
